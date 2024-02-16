@@ -8,4 +8,20 @@ public class DisciplinesEtNiveau {
         this.discipline = discipline;
         this.niveau = niveau;
     }
+
+    public Discipline getDiscipline() {
+        return discipline;
+    }
+
+    public void setDiscipline(Discipline discipline) {
+        this.discipline = discipline;
+    }
+
+    public int getNiveau() {
+        return niveau;
+    }
+
+    public void setNiveau(int niveau) {
+        this.niveau = niveau;
+    }
 }
