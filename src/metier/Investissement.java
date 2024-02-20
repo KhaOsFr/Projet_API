@@ -11,6 +11,11 @@ public class Investissement {
         this.discipline = discipline;
     }
 
+    public Investissement(int quantiteJH, Discipline discipline) {
+        this.quantiteJH = quantiteJH;
+        this.discipline = discipline;
+    }
+
     public int getId_invest() {
         return id_invest;
     }

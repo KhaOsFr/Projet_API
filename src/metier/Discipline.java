@@ -11,6 +11,11 @@ public class Discipline {
         this.description = description;
     }
 
+    public Discipline(String nom, String description) {
+        this.nom = nom;
+        this.description = description;
+    }
+
     public int getId_discipline() {
         return id_discipline;
     }

@@ -2,6 +2,7 @@ package metier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Employe {
     protected int id_emplye;
@@ -12,6 +13,7 @@ public class Employe {
     protected String mail;
     protected List<Projet> list_projets = new ArrayList<>();
     protected List<Competence> list_competences = new ArrayList<>();
+    protected List<DisciplinesEtNiveau> list_disc_niveau = new ArrayList<>();
 
     public Employe(int id_emplye, String matricule, String nom, String prenom, String tel, String mail) {
         this.id_emplye = id_emplye;
@@ -22,10 +24,27 @@ public class Employe {
         this.mail = mail;
     }
 
-    public void listeDisciplinesEtNiveau() {
+    public List<DisciplinesEtNiveau> listeDisciplinesEtNiveau() {
+        for (Competence c : list_competences) {
+            list_disc_niveau.add(new DisciplinesEtNiveau(c.getDiscipline(), c.getNiveau()));
+        }
+        return list_disc_niveau;
     }
 
     public void addDiscipline(Discipline d, int niveau) {
+        list_competences.add(new Competence(niveau, d));
+    }
+
+    public void modifDiscipline(Discipline d, int niveau) {
+        for (Competence c : list_competences) {
+            if (c.getDiscipline() == d) c.setNiveau(niveau);
+        }
+    }
+
+    public void suppDiscipline(Discipline d) {
+        for (Competence c : list_competences) {
+            if (c.getDiscipline() == d) list_competences.remove(c);
+        }
     }
 
     public int getId_emplye() {

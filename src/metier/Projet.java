@@ -23,6 +23,30 @@ public class Projet {
         this.responsable = responsable;
     }
 
+    public List<Investissement> listeDisciplinesEtInvestissement() {
+        return listInvestissement; //On a accès à la quantité et la discipline depuis les investissements
+    }
+
+    public void addDiscipline(Discipline d, int qte) {
+        listInvestissement.add(new Investissement(qte, d));
+    }
+
+    public void modifDiscipline(Discipline d, int qte) {
+        for (Investissement i : listInvestissement) {
+            if (i.getDiscipline() == d) i.setQuantiteJH(qte);
+        }
+    }
+
+    public void suppDiscipline(Discipline d) {
+        for (Investissement i : listInvestissement) {
+            if (i.getDiscipline() == d) listInvestissement.remove(i);
+        }
+    }
+
+    /*TODO public NiveauResponsableDiscipline niveauxResponsableDisciplines() {
+        return;
+    }*/
+
     public int getId_projet() {
         return id_projet;
     }
