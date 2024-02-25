@@ -1,13 +1,10 @@
 package metier;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Classe métier regroupant le niveau des responsables et les disciplines
  *
  * @author Simon Robert
- * @version 1.0
+ * @version 1.2
  *
  */
 

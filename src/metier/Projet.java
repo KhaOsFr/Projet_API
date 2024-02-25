@@ -9,12 +9,16 @@ import java.util.List;
  * Classe métier de gestion des projets
  *
  * @author Simon Robert
- * @version 1.0
+ * @version 1.2
  *
  */
 
 public class Projet {
 
+    /**
+     * Variable statique qui permet d'incrémenter un identifiant unique à chaque nouveau projet
+     */
+    protected static int id = 0;
     /**
      * identifiant unique du projet
      */
@@ -46,20 +50,26 @@ public class Projet {
 
     /**
      *
-     * @param id_projet identifiant du projet
      * @param nom nom du projet
      * @param dateDebut date de début du projet
      * @param dateFin date de fin du projet
      * @param cout coût du projet
      * @param responsable employé responsable du projet
      */
-    public Projet(int id_projet, String nom, LocalDate dateDebut, LocalDate dateFin, BigDecimal cout, Employe responsable) {
-        this.id_projet = id_projet;
+    public Projet(String nom, LocalDate dateDebut, LocalDate dateFin, BigDecimal cout, Employe responsable) {
+        id_projet = id++;
         this.nom = nom;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.cout = cout;
         this.responsable = responsable;
+    }
+
+    /**
+     * Constructeur par défaut si on ne rentre pas de paramètre à la création de l'objet
+     */
+    public Projet() {
+        id_projet = id++;
     }
 
     /**

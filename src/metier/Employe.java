@@ -2,18 +2,21 @@ package metier;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Classe métier de gestion des employés
  *
  * @author Simon Robert
- * @version 1.0
+ * @version 1.2
  *
  */
 
 public class Employe {
 
+    /**
+     * Variable statique qui permet d'incrémenter un identifiant unique à chaque nouvel employé
+     */
+    protected static int id = 0;
     /**
      * identifiant unique de l'employé
      */
@@ -53,15 +56,14 @@ public class Employe {
 
     /**
      *
-     * @param id_emplye identifiant de l'employé
      * @param matricule matricule de l'employé
      * @param nom nom de l'employé
      * @param prenom prénom de l'employé
      * @param tel numéro de téléphone de l'employé
      * @param mail adresse mail de l'employé
      */
-    public Employe(int id_emplye, String matricule, String nom, String prenom, String tel, String mail) {
-        this.id_emplye = id_emplye;
+    public Employe(String matricule, String nom, String prenom, String tel, String mail) {
+        id_emplye = id++;
         this.matricule = matricule;
         this.nom = nom;
         this.prenom = prenom;
@@ -71,16 +73,22 @@ public class Employe {
 
     /**
      *
-     * @param id_emplye identifiant de l'employé
      * @param matricule matricule de l'employé
      * @param nom nom de l'employé
      * @param prenom prénom de l'employé
      */
-    public Employe(int id_emplye, String matricule, String nom, String prenom) {
-        this.id_emplye = id_emplye;
+    public Employe(String matricule, String nom, String prenom) {
+        id_emplye = id++;
         this.matricule = matricule;
         this.nom = nom;
         this.prenom = prenom;
+    }
+
+    /**
+     * Constructeur par défaut si on ne rentre pas de paramètre à la création de l'objet
+     */
+    public Employe() {
+        id_emplye = id++;
     }
 
     /**

@@ -4,12 +4,16 @@ package metier;
  * Classe métier de gestion des compétences
  *
  * @author Simon Robert
- * @version 1.0
+ * @version 1.2
  *
  */
 
 public class Competence {
 
+    /**
+     * Variable statique qui permet d'incrémenter un identifiant unique à chaque nouvelle compétence
+     */
+    protected static int id = 0;
     /**
      * identifiant unique de compétence
      */
@@ -26,24 +30,20 @@ public class Competence {
 
     /**
      *
-     * @param id_comp identifiant compétence
      * @param niveau niveau de la compétence
      * @param discipline discipline concernée par la compétence
      */
-    public Competence(int id_comp, int niveau, Discipline discipline) {
-        this.id_comp = id_comp;
+    public Competence(int niveau, Discipline discipline) {
+        id_comp = id++;
         this.niveau = niveau;
         this.discipline = discipline;
     }
 
     /**
-     *
-     * @param niveau niveau de la compétence
-     * @param discipline discipline concernée par la compétence
+     * Constructeur par défaut si on ne rentre pas de paramètre à la création de l'objet
      */
-    public Competence(int niveau, Discipline discipline) {
-        this.niveau = niveau;
-        this.discipline = discipline;
+    public Competence() {
+        id_comp = id++;
     }
 
     /**

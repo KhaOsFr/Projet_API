@@ -6,12 +6,16 @@ import java.util.Objects;
  * Classe métier de gestion des disciplines
  *
  * @author Simon Robert
- * @version 1.0
+ * @version 1.2
  *
  */
 
 public class Discipline {
 
+    /**
+     * Variable statique qui permet d'incrémenter un identifiant unique à chaque nouvelle discipline
+     */
+    protected static int id = 0;
     /**
      * identifiant unique de discipline
      */
@@ -27,24 +31,20 @@ public class Discipline {
 
     /**
      *
-     * @param id_discipline identifiant de la discipline
      * @param nom nom de la discipline
      * @param description description de la discipline
      */
-    public Discipline(int id_discipline, String nom, String description) {
-        this.id_discipline = id_discipline;
+    public Discipline(String nom, String description) {
+        id_discipline = id++;
         this.nom = nom;
         this.description = description;
     }
 
     /**
-     *
-     * @param nom nom de la discipline
-     * @param description description de la discipline
+     * Constructeur par défaut si on ne rentre pas de paramètre à la création de l'objet
      */
-    public Discipline(String nom, String description) {
-        this.nom = nom;
-        this.description = description;
+    public Discipline() {
+        id_discipline = id++;
     }
 
     /**

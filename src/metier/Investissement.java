@@ -4,12 +4,16 @@ package metier;
  * Classe métier de gestion des investissements
  *
  * @author Simon Robert
- * @version 1.0
+ * @version 1.2
  *
  */
 
 public class Investissement {
 
+    /**
+     * Variable statique qui permet d'incrémenter un identifiant unique à chaque nouvel investissement
+     */
+    protected static int id = 0;
     /**
      * identifiant unique de l'investissement
      */
@@ -25,24 +29,20 @@ public class Investissement {
 
     /**
      *
-     * @param id_invest identifiant de l'investissment
      * @param quantiteJH quantité (journée / homme)
      * @param discipline discipline concernée par l'investissement
      */
-    public Investissement(int id_invest, int quantiteJH, Discipline discipline) {
-        this.id_invest = id_invest;
+    public Investissement(int quantiteJH, Discipline discipline) {
+        id_invest = id++;
         this.quantiteJH = quantiteJH;
         this.discipline = discipline;
     }
 
     /**
-     *
-     * @param quantiteJH quantité (journée / homme)
-     * @param discipline discipline concernée par l'investissement
+     * Constructeur par défaut si on ne rentre pas de paramètre à la création de l'objet
      */
-    public Investissement(int quantiteJH, Discipline discipline) {
-        this.quantiteJH = quantiteJH;
-        this.discipline = discipline;
+    public Investissement() {
+        id_invest = id++;
     }
 
     /**

@@ -4,7 +4,7 @@ package metier;
  * Classe métier pour regrouper les disciplines et les niveaux
  *
  * @author Simon Robert
- * @version 1.0
+ * @version 1.2
  *
  */
 
