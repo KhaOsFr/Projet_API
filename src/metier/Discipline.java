@@ -1,5 +1,7 @@
 package metier;
 
+import java.util.Objects;
+
 /**
  * Classe métier de gestion des disciplines
  *
@@ -43,6 +45,27 @@ public class Discipline {
     public Discipline(String nom, String description) {
         this.nom = nom;
         this.description = description;
+    }
+
+    /**
+     * Redéfinition de la méthode equals pour pouvoir comparer des disciplines directement par leur identifiant
+     * @param o
+     * @return true si les identifiants sont les mêmes, sinon false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Discipline that = (Discipline) o;
+        return id_discipline == that.id_discipline;
+    }
+
+    /**
+     * Redéfinition de la méthode hashCode afin de permettre au equals de ne comparer que les identifiants des disciplines
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_discipline);
     }
 
     /**

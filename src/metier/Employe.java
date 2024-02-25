@@ -111,7 +111,7 @@ public class Employe {
     public void modifDiscipline(Discipline d, int niveau) {
         boolean trouve = false;
         for (Competence c : list_competences) {
-            if (c.getDiscipline() == d) {
+            if (c.getDiscipline().equals(d)) {
                 c.setNiveau(niveau);
                 trouve = true; //Permet d'avertir l'utilisateur si la discipline envoyée en paramètre n'existe pas dans la liste
             }
@@ -126,7 +126,7 @@ public class Employe {
     public void suppDiscipline(Discipline d) {
         boolean trouve = false;
         for (Competence c : list_competences) {
-            if (c.getDiscipline() == d) {
+            if (c.getDiscipline().equals(d)) {
                 list_competences.remove(c);
                 trouve = true;
             }

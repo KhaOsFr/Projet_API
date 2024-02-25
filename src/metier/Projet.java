@@ -87,7 +87,7 @@ public class Projet {
     public void modifDiscipline(Discipline d, int qte) {
         boolean trouve = false;
         for (Investissement i : listInvestissement) {
-            if (i.getDiscipline() == d) {
+            if (i.getDiscipline().equals(d)) {
                 i.setQuantiteJH(qte);
                 trouve = true;
             }
@@ -102,7 +102,7 @@ public class Projet {
     public void suppDiscipline(Discipline d) {
         boolean trouve = false;
         for (Investissement i : listInvestissement) {
-            if (i.getDiscipline() == d) {
+            if (i.getDiscipline().equals(d)) {
                 listInvestissement.remove(i);
                 trouve = true;
             }
@@ -118,12 +118,24 @@ public class Projet {
         List<NiveauResponsableDiscipline> liste_respDisc = new ArrayList<>();
         for (Competence c : responsable.list_competences) {
             for (Investissement i : listInvestissement) {
-                if (c.getDiscipline().getId_discipline() == i.getDiscipline().getId_discipline()) {
+                if (c.getDiscipline().equals(i.getDiscipline())) {
                     liste_respDisc.add(new NiveauResponsableDiscipline(c.getNiveau(), responsable.getNom(), c.getDiscipline()));
                 }
             }
         } //La double boucle permet de vérifier que la discipline fait bien l'objet d'un investisssement
         return liste_respDisc;
+    }
+
+    /**
+     * méthode qui retourne la valeur totale du temps des investissements
+     * @return total du temps (journée / homme)
+     */
+    public int investissementTotal() {
+        int total = 0;
+        for(Investissement i : listInvestissement) {
+            total += i.getQuantiteJH();
+        }
+        return total;
     }
 
     /**
