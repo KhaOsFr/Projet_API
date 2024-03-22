@@ -71,6 +71,15 @@ public class Employe {
         this.mail = mail;
     }
 
+    /**
+     *
+     * @param id_emplye identifiant unique de l'employé
+     * @param matricule matricule de l'employé
+     * @param nom nom de l'employé
+     * @param prenom prénom de l'employé
+     * @param tel numéro de téléphone de l'employé
+     * @param mail adresse mail de l'employé
+     */
     public Employe(int id_emplye, String matricule, String nom, String prenom, String tel, String mail) {
         this.id_emplye = id_emplye;
         this.matricule = matricule;
@@ -277,5 +286,16 @@ public class Employe {
      */
     public void setList_competences(List<Competence> list_competences) {
         this.list_competences = list_competences;
+    }
+
+    @Override
+    public String toString() {
+        return "\nEmployé " +
+                "n°" + id_emplye +
+                "\nMatricule : " + matricule +
+                "\nNom : " + nom +
+                "\nPrénom : " + prenom +
+                "\nTéléphone : " + tel +
+                "\nMail : " + mail;
     }
 }

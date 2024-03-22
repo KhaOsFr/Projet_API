@@ -19,8 +19,8 @@ public class GestEmploye {
         }
         System.out.println("Connexion établie");
         do {
-            System.out.println("1. Ajout\n2. Recherche\n3. Modification\n4. Suppression\n5. Tous\n6. Fin");
-            System.out.println("choix : ");
+            System.out.println("\n1. Ajout\n2. Recherche\n3. Modification\n4. Suppression\n5. Afficher tous les employés\n6. Fin");
+            System.out.print("choix : ");
             int ch = sc.nextInt();
             sc.skip("\n");
             switch (ch) {
@@ -28,22 +28,22 @@ public class GestEmploye {
                     ajout();
                     break;
                 case 2:
-                    //recherche();
+                    recherche();
                     break;
                 case 3:
-                    //modification();
+                    modification();
                     break;
                 case 4:
-                    //suppression();
+                    suppression();
                     break;
                 case 5:
-                    //tous();
+                    tous();
                     break;
                 case 6:
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("choix invalide recommencez ");
+                    System.out.println("Choix invalide recommencez ");
             }
         } while (true);
 
@@ -51,13 +51,13 @@ public class GestEmploye {
 
     public void ajout() {
 
-        System.out.print("Matricule de l'employé : ");
+        System.out.print("\nMatricule de l'employé : ");
         String matricule = sc.nextLine();
         System.out.print("Nom : ");
         String nom = sc.nextLine();
         System.out.print("Prénom : ");
         String prenom = sc.nextLine();
-        System.out.print("Téléphone :");
+        System.out.print("Téléphone : ");
         String telephone = sc.nextLine();
         System.out.print("Mail : ");
         String mail = sc.nextLine();
@@ -68,17 +68,17 @@ public class GestEmploye {
         ) {
             pstm1.setString(1, matricule);
             pstm1.setString(2, nom);
-            pstm1.setString(2, prenom);
+            pstm1.setString(3, prenom);
             pstm1.setString(4, telephone);
             pstm1.setString(5, mail);
             int n = pstm1.executeUpdate();
-            System.out.println(n + " ligne(s) insérée(s)");
+            System.out.println(n + " ligne insérée");
             if (n == 1) {
                 pstm2.setString(1, matricule);
                 ResultSet rs = pstm2.executeQuery();
                 if (rs.next()) {
-                    int idclient = rs.getInt(1);
-                    System.out.println("idclient = " + idclient);
+                    int id_emp = rs.getInt(1);
+                    System.out.println("id_emp = " + id_emp);
                 } else System.out.println("Record introuvable");
             }
 
@@ -114,14 +114,14 @@ public class GestEmploye {
         System.out.print("Id de l'employé recherché : ");
         int idrech = sc.nextInt();
         sc.skip("\n");
-        System.out.println("nouveau téléphone ");
-        String ntel = sc.nextLine();
+        System.out.println("Nouveau téléphone ");
+        String telephone = sc.nextLine();
         String query = "update APIEMPLOYE set telephone=? where id_empl = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setString(1, ntel);
+            pstm.setString(1, telephone);
             pstm.setInt(2, idrech);
             int n = pstm.executeUpdate();
-            if (n != 0) System.out.println(n + "ligne mise à jour");
+            if (n != 0) System.out.println(n + " ligne mise à jour");
             else System.out.println("record introuvable");
 
         } catch (SQLException e) {
@@ -130,14 +130,14 @@ public class GestEmploye {
     }
 
     public void suppression() {
-        System.out.println("id du client recherché ");
+        System.out.print("Id de l'employé recherché : ");
         int idrech = sc.nextInt();
-        String query = "delete from APICLIENT where idclient = ?";
+        String query = "delete from APIEMPLOYE where id_empl = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1, idrech);
             int n = pstm.executeUpdate();
-            if (n != 0) System.out.println(n + "ligne supprimée");
-            else System.out.println("record introuvable");
+            if (n != 0) System.out.println(n + " ligne supprimée");
+            else System.out.println("Record introuvable");
 
         } catch (SQLException e) {
             System.out.println("erreur sql :" + e);
@@ -145,6 +145,25 @@ public class GestEmploye {
 
     }
 
+    private void tous() {
+        String query="select * from APIEMPLOYE";
+        try(Statement stm = dbConnect.createStatement()) {
+            ResultSet rs = stm.executeQuery(query);
+            while(rs.next()){
+                int id_emp = rs.getInt(1);
+                String matricule = rs.getString(2);
+                String nom = rs.getString(3);
+                String prenom = rs.getString(4);
+                String tel = rs.getString(5);
+                String mail = rs.getString(6);
+                Employe emp = new Employe(id_emp,matricule,nom,prenom,tel,mail);
+                System.out.println(emp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("erreur sql :"+e);
+        }
+    }
 
     public static void main(String[] args) {
         GestEmploye g = new GestEmploye();
