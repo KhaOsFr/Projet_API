@@ -71,6 +71,15 @@ public class Employe {
         this.mail = mail;
     }
 
+    public Employe(int id_emplye, String matricule, String nom, String prenom, String tel, String mail) {
+        this.id_emplye = id_emplye;
+        this.matricule = matricule;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.tel = tel;
+        this.mail = mail;
+    }
+
     /**
      *
      * @param matricule matricule de l'employé
