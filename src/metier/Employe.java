@@ -290,12 +290,12 @@ public class Employe {
 
     @Override
     public String toString() {
-        return "\nEmployé " +
+        return " Employé " +
                 "n°" + id_emplye +
-                "\nMatricule : " + matricule +
-                "\nNom : " + nom +
-                "\nPrénom : " + prenom +
-                "\nTéléphone : " + tel +
-                "\nMail : " + mail;
+                " | Matricule : " + matricule +
+                " | Nom : " + nom +
+                " | Prénom : " + prenom +
+                " | Téléphone : " + tel +
+                " | Mail : " + mail;
     }
 }
