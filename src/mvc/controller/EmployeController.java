@@ -16,11 +16,12 @@ public class EmployeController {
         this.view.setController(this);
     }
 
-    public List<Employe> getAll(){
+    public List<Employe> getAll() {
         return model.getEmployes();
     }
+
     public Employe addEmploye(Employe employe) {
-        return  model.addEmploye(employe);
+        return model.addEmploye(employe);
     }
 
     public boolean removeEmploye(Employe emp) {
@@ -33,7 +34,7 @@ public class EmployeController {
     }
 
     public Employe search(int idEmpl) {
-        return  model.readEmploye(idEmpl);
+        return model.readEmploye(idEmpl);
     }
 
 }

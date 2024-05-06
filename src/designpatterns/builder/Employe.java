@@ -109,6 +109,15 @@ public class Employe {
         id_emplye = id++;
     }
 
+    public Employe(EmployeBuilder eb) {
+        this.id_emplye = id++;
+        this.matricule = eb.matricule;
+        this.nom = eb.nom;
+        this.prenom = eb.prenom;
+        this.tel = eb.tel;
+        this.mail = eb.mail;
+    }
+
     /**
      * méthode retournant a liste des disciplines et leur niveau de compétence
      * @return list_disc_niveau
@@ -169,27 +178,11 @@ public class Employe {
     }
 
     /**
-     * setter de l'identifiant de l'employé
-     * @param id_emplye
-     */
-    public void setId_emplye(int id_emplye) {
-        this.id_emplye = id_emplye;
-    }
-
-    /**
      * getter du matricule de l'employé
      * @return matricule
      */
     public String getMatricule() {
         return matricule;
-    }
-
-    /**
-     * setter du matricule  de l'employé
-     * @param matricule
-     */
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
     }
 
     /**
@@ -201,27 +194,11 @@ public class Employe {
     }
 
     /**
-     * setter du nom  de l'employé
-     * @param nom
-     */
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    /**
      * getter du prénom de l'employé
      * @return prenom
      */
     public String getPrenom() {
         return prenom;
-    }
-
-    /**
-     * setter du prénom de l'employé
-     * @param prenom
-     */
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
     }
 
     /**
@@ -233,27 +210,11 @@ public class Employe {
     }
 
     /**
-     * setter du numéro de téléphone de l'employé
-     * @param tel
-     */
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    /**
      * getter de l'adresse mail de l'employé
      * @return adresse mail
      */
     public String getMail() {
         return mail;
-    }
-
-    /**
-     * setter de l'adresse mail de l'employé
-     * @param mail
-     */
-    public void setMail(String mail) {
-        this.mail = mail;
     }
 
     /**
@@ -264,13 +225,6 @@ public class Employe {
         return list_projets;
     }
 
-    /**
-     * setter de la liste des projets de l'employé
-     * @param list_projets
-     */
-    public void setList_projets(List<Projet> list_projets) {
-        this.list_projets = list_projets;
-    }
 
     /**
      * getter de la liste des compétences de l'employé
@@ -280,22 +234,58 @@ public class Employe {
         return list_competences;
     }
 
-    /**
-     * setter de la liste des compétences de l'employé
-     * @param list_competences
-     */
-    public void setList_competences(List<Competence> list_competences) {
-        this.list_competences = list_competences;
-    }
-
     @Override
     public String toString() {
-        return "\nEmployé " +
+        return "Employé " +
                 "n°" + id_emplye +
-                "\nMatricule : " + matricule +
-                "\nNom : " + nom +
-                "\nPrénom : " + prenom +
-                "\nTéléphone : " + tel +
-                "\nMail : " + mail;
+                "| Matricule : " + matricule +
+                "| Nom : " + nom +
+                "| Prénom : " + prenom +
+                "| Téléphone : " + tel +
+                "| Mail : " + mail;
+    }
+
+    public static class EmployeBuilder {
+        protected int id_emplye;
+        protected String matricule;
+        protected String nom;
+        protected String prenom;
+        protected String tel;
+        protected String mail;
+
+        public EmployeBuilder setId_emplye(int id_emplye) {
+            this.id_emplye = id_emplye;
+            return this;
+        }
+
+        public EmployeBuilder setMatricule(String matricule) {
+            this.matricule = matricule;
+            return this;
+        }
+
+        public EmployeBuilder setNom(String nom) {
+            this.nom = nom;
+            return this;
+        }
+
+        public EmployeBuilder setPrenom(String prenom) {
+            this.prenom = prenom;
+            return this;
+        }
+
+        public EmployeBuilder setTel(String tel) {
+            this.tel = tel;
+            return this;
+        }
+
+        public EmployeBuilder setMail(String mail) {
+            this.mail = mail;
+            return this;
+        }
+
+        public Employe Build() throws Exception {
+            if(matricule == null || nom == null || prenom == null) throw new Exception("Informations manquantes");
+            return new Employe(this);
+        }
     }
 }
