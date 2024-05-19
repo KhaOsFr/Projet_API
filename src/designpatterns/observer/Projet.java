@@ -13,7 +13,7 @@ import java.util.List;
  *
  */
 
-public class Projet {
+public class Projet extends Subject {
 
     /**
      * Variable statique qui permet d'incrémenter un identifiant unique à chaque nouveau projet
@@ -210,6 +210,7 @@ public class Projet {
      */
     public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
+        notifyObservers();
     }
 
     /**
@@ -258,5 +259,10 @@ public class Projet {
      */
     public void setListInvestissement(List<Investissement> listInvestissement) {
         this.listInvestissement = listInvestissement;
+    }
+
+    @Override
+    public String getNotification() {
+        return "Nouvelle date de fin de " + nom + " : " + dateFin;
     }
 }

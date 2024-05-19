@@ -238,11 +238,11 @@ public class Employe {
     public String toString() {
         return "Employé " +
                 "n°" + id_emplye +
-                "| Matricule : " + matricule +
-                "| Nom : " + nom +
-                "| Prénom : " + prenom +
-                "| Téléphone : " + tel +
-                "| Mail : " + mail;
+                " | Matricule : " + matricule +
+                " | Nom : " + nom +
+                " | Prénom : " + prenom +
+                " | Téléphone : " + tel +
+                " | Mail : " + mail;
     }
 
     public static class EmployeBuilder {

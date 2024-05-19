@@ -11,7 +11,7 @@ import java.util.List;
  *
  */
 
-public class Employe {
+public class Employe extends Observer {
 
     /**
      * Variable statique qui permet d'incrémenter un identifiant unique à chaque nouvel employé
@@ -292,10 +292,15 @@ public class Employe {
     public String toString() {
         return "Employé " +
                 "n°" + id_emplye +
-                "| Matricule : " + matricule +
-                "| Nom : " + nom +
-                "| Prénom : " + prenom +
-                "| Téléphone : " + tel +
-                "| Mail : " + mail;
+                " | Matricule : " + matricule +
+                " | Nom : " + nom +
+                " | Prénom : " + prenom +
+                " | Téléphone : " + tel +
+                " | Mail : " + mail;
+    }
+
+    @Override
+    public void update(String msg) {
+        System.out.println(prenom + " " + nom + " a reçu le msg : " + msg);
     }
 }
