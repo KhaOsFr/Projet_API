@@ -3,7 +3,9 @@ package designpatterns.composite;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Classe métier de gestion des projets
@@ -34,6 +36,9 @@ public class Projet extends Element {
      * liste des investissements du projet
      */
     protected List<Investissement> listInvestissement = new ArrayList<>();
+
+
+    protected Set<Element> elts = new HashSet<>();
 
     /**
      * @param nom         nom du projet
@@ -134,7 +139,15 @@ public class Projet extends Element {
 
     @Override
     public BigDecimal coutTotal() {
-        return null;
+        BigDecimal somme = this.cout;
+        for (Element e : elts) {
+            somme = somme.add(e.coutTotal());
+        }
+        return somme;
+    }
+
+    public Set<Element> getElts() {
+        return elts;
     }
 
     /**
@@ -229,7 +242,7 @@ public class Projet extends Element {
 
     @Override
     public String toString() {
-        return "Projet{" +
+        StringBuilder aff = new StringBuilder("Projet{" +
                 "id=" + getId() +
                 ", nom=" + getNom() +
                 ", dateDebut=" + dateDebut +
@@ -237,6 +250,12 @@ public class Projet extends Element {
                 ", cout=" + cout +
                 ", responsable=" + responsable +
                 ", listInvestissement=" + listInvestissement +
-                '}';
+                "}\n");
+
+        for (Element e : elts) {
+            aff.append(e + "\n");
+        }
+
+        return aff + "Valeur totale de " + getNom() + " = " + coutTotal() + " €\n";
     }
 }
