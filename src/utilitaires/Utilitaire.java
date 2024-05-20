@@ -60,14 +60,14 @@ public class Utilitaire {
     public static void affListe(List l){
         int i =1;
         for(Object o :l) {
-            System.out.println((i++)+"."+o);
+            System.out.println((i++)+". "+o);
         }
     }
 
     public static int choixElt(List l){
         int choix;
         do {
-            System.out.println("choix :");
+            System.out.print("Choix : ");
             choix = lireInt();
 
         } while(choix <1 || choix > l.size());
