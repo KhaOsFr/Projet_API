@@ -5,6 +5,7 @@ import metier.Employe;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
 import static utilitaires.Utilitaire.*;
 
 public class EmployeViewConsole extends AbstractView<Employe> {
@@ -14,7 +15,7 @@ public class EmployeViewConsole extends AbstractView<Employe> {
     @Override
     public void menu() {
         update(controller.getAll());
-        List options = Arrays.asList("Ajouter", "Retirer", "Rechercher","Modifier","Fin");
+        List options = Arrays.asList("Ajouter", "Retirer", "Rechercher", "Modifier", "Fin");
         do {
             int ch = choixListe(options);
 
@@ -55,7 +56,7 @@ public class EmployeViewConsole extends AbstractView<Employe> {
 
     private void retirer() {
 
-        int nl = choixElt(la)-1;
+        int nl = choixElt(la) - 1;
         Employe e = la.get(nl);
         boolean ok = controller.remove(e);
         if (ok) affMsg("Employé effacé");
@@ -89,11 +90,5 @@ public class EmployeViewConsole extends AbstractView<Employe> {
     @Override
     public void affList(List la) {
         affListe(la);
-    }
-
-    public Employe selectionner() {
-        update(controller.getAll());
-        int nl = choixListe(la);
-        return la.get(nl - 1);
     }
 }

@@ -1,5 +1,6 @@
 package mvc_2.view;
 
+import metier.Employe;
 import mvc_2.controller.Controller;
 import mvc_2.observer.Observer;
 

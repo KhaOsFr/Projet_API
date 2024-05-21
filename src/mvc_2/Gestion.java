@@ -15,11 +15,20 @@ public class Gestion {
     public static AbstractView<Employe> ev;
     public static Controller<Employe> ec;
 
+    public static DAO<Projet> pm;
+    public static AbstractView<Projet> pv;
+    public static Controller<Projet> pc;
+
     public void gestion () {
         em = new ModelEmploye();
         ev = new EmployeViewConsole();
         ec = new EmployeController(em, ev);
         em.addObserver(ev);
+
+        pm = new ModelProjet();
+        pv = new ProjetViewConsole();
+        pc = new ProjetController(pm, pv);
+        pm.addObserver(pv);
 
         List<String> loptions = Arrays.asList("Employés", "Projet", "Discipline", "Investissement", "Compétence", "Fin");
         do {
@@ -29,16 +38,16 @@ public class Gestion {
                     ev.menu();
                     break;
                 case 2:
-                    //lv.menu();
+                    pv.menu();
                     break;
                 case 3:
-                    //ov.menu();
+                    //dv.menu();
                     break;
                 case 4:
-                    //ev.menu();
+                    //iv.menu();
                     break;
                 case 5:
-                    //rv.menu();
+                    //cv.menu();
                     break;
                 case 6:
                     System.exit(0);

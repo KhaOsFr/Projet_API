@@ -65,6 +65,23 @@ public class Projet {
         this.responsable = responsable;
     }
 
+    public Projet(int id_projet, String nom, LocalDate dateDebut, LocalDate dateFin, BigDecimal cout) {
+        this.id_projet = id_projet;
+        this.nom = nom;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.cout = cout;
+    }
+
+    public Projet(int id_projet, String nom, LocalDate dateDebut, LocalDate dateFin, BigDecimal cout, Employe responsable) {
+        this.id_projet = id_projet;
+        this.nom = nom;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.cout = cout;
+        this.responsable = responsable;
+    }
+
     /**
      * Constructeur par défaut si on ne rentre pas de paramètre à la création de l'objet
      */
@@ -258,5 +275,17 @@ public class Projet {
      */
     public void setListInvestissement(List<Investissement> listInvestissement) {
         this.listInvestissement = listInvestissement;
+    }
+
+    @Override
+    public String toString() {
+        return "Projet => " +
+                "id_projet : " + id_projet +
+                " | nom : '" + nom + '\'' +
+                " | dateDebut : " + dateDebut +
+                " | dateFin : " + dateFin +
+                " | cout : " + cout +
+                " | responsable : " + responsable +
+                " | listInvestissement : " + listInvestissement;
     }
 }

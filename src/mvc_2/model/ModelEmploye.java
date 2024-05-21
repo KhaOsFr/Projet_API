@@ -18,7 +18,7 @@ public class ModelEmploye extends DAO<Employe> implements DAOSpecialEmploye {
     public ModelEmploye() {
         dbConnect = DBConnection.getConnection();
         if (dbConnect == null) {
-            System.err.println("erreur de connexion");
+            System.err.println("Erreur de connexion");
             System.exit(1);
         }
     }
@@ -65,7 +65,7 @@ public class ModelEmploye extends DAO<Employe> implements DAOSpecialEmploye {
             if (n != 0) return true;
             else return false;
         } catch (SQLException e) {
-            System.err.println("erreur sql :" + e);
+            System.err.println("Erreur sql :" + e);
             return false;
         }
     }
