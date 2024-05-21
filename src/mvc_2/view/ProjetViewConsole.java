@@ -20,6 +20,7 @@ public class ProjetViewConsole extends AbstractView<Projet> {
     @Override
     public void menu() {
         update(controller.getAll());
+        System.out.println();
         List options = Arrays.asList("Ajouter", "Retirer", "Rechercher","Modifier","Fin");
         do {
             int ch = choixListe(options);
@@ -84,9 +85,10 @@ public class ProjetViewConsole extends AbstractView<Projet> {
     }
 
     private void rechercher() {
-        System.out.println("Identifiant du projet : ");
+        System.out.print("Identifiant du projet : ");
         int idProjet = sc.nextInt();
-        controller.search(idProjet);
+        Projet p = controller.search(idProjet);
+        System.out.println(p);
     }
 
     private void modifier() {

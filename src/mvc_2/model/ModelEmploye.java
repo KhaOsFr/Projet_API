@@ -102,8 +102,7 @@ public class ModelEmploye extends DAO<Employe> implements DAOSpecialEmploye {
                 String prenom = rs.getString(4);
                 String tel = rs.getString(5);
                 String mail = rs.getString(6);
-                Employe emp = new Employe(rech, matricule, nom, prenom, tel, mail);
-                return emp;
+                return new Employe(rech, matricule, nom, prenom, tel, mail);
             } else {
                 return null;
             }

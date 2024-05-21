@@ -19,7 +19,11 @@ public class Gestion {
     public static AbstractView<Projet> pv;
     public static Controller<Projet> pc;
 
-    public void gestion () {
+    public static DAO<Discipline> dm;
+    public static AbstractView<Discipline> dv;
+    public static Controller<Discipline> dc;
+
+    public void gestion() {
         em = new ModelEmploye();
         ev = new EmployeViewConsole();
         ec = new EmployeController(em, ev);
@@ -30,9 +34,16 @@ public class Gestion {
         pc = new ProjetController(pm, pv);
         pm.addObserver(pv);
 
-        List<String> loptions = Arrays.asList("Employés", "Projet", "Discipline", "Investissement", "Compétence", "Fin");
+        dm = new ModelDiscipline();
+        dv = new DisciplineViewConsole();
+        dc = new DisciplineController(dm, dv);
+        dm.addObserver(dv);
+
+        List<String> loptions = Arrays.asList("Employés", "Projet", "Discipline", "Fin");
         do {
+            System.out.println();
             int ch = Utilitaire.choixListe(loptions);
+            System.out.println();
             switch (ch) {
                 case 1:
                     ev.menu();
@@ -41,15 +52,9 @@ public class Gestion {
                     pv.menu();
                     break;
                 case 3:
-                    //dv.menu();
+                    dv.menu();
                     break;
                 case 4:
-                    //iv.menu();
-                    break;
-                case 5:
-                    //cv.menu();
-                    break;
-                case 6:
                     System.exit(0);
             }
         } while (true);

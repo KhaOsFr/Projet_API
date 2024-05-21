@@ -40,6 +40,12 @@ public class Discipline {
         this.description = description;
     }
 
+    public Discipline(int id_discipline, String nom, String description) {
+        this.id_discipline = id_discipline;
+        this.nom = nom;
+        this.description = description;
+    }
+
     /**
      * Constructeur par défaut si on ne rentre pas de paramètre à la création de l'objet
      */
@@ -114,5 +120,14 @@ public class Discipline {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Discipline{" +
+                "id_discipline=" + id_discipline +
+                ", nom='" + nom + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

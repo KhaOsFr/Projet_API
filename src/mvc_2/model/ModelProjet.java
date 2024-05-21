@@ -98,8 +98,7 @@ public class ModelProjet extends DAO<Projet> implements DAOSpecialProjet {
                 LocalDate dated = rs.getDate(3).toLocalDate();
                 LocalDate datef = rs.getDate(4).toLocalDate();
                 BigDecimal cout = rs.getBigDecimal(5);
-                Projet p = new Projet(rech, nom, dated, datef, cout);
-                return p;
+                return new Projet(rech, nom, dated, datef, cout);
             } else {
                 return null;
             }
@@ -112,16 +111,33 @@ public class ModelProjet extends DAO<Projet> implements DAOSpecialProjet {
     @Override
     public List<Projet> getAll() {
         List<Projet> lp = new ArrayList<>();
-        String query = "select id_projet,nom,datedebut,datefin,cout from APIPROJET";
-        try (Statement stm = dbConnect.createStatement()) {
-            ResultSet rs = stm.executeQuery(query);
+        String query1 = "select * from APIPROJET";
+        String query2 = "select * from APIEMPLOYE where id_empl = ?";
+        try (Statement stm = dbConnect.createStatement();
+             PreparedStatement pstm2 = dbConnect.prepareStatement(query2)) {
+
+            ResultSet rs = stm.executeQuery(query1);
             while (rs.next()) {
                 int idProjet = rs.getInt(1);
                 String nom = rs.getString(2);
                 LocalDate dated = rs.getDate(3).toLocalDate();
                 LocalDate datef = rs.getDate(4).toLocalDate();
                 BigDecimal cout = rs.getBigDecimal(5);
-                Projet p = new Projet(idProjet, nom, dated, datef, cout);
+                int id_empl = rs.getInt(6);
+
+                pstm2.setInt(1, id_empl);
+                ResultSet rsEmp = pstm2.executeQuery();
+                Employe emp = null;
+                if (rsEmp.next()) {
+                    int id_employe = rsEmp.getInt(1);
+                    String mat = rsEmp.getString(2);
+                    String nomp = rsEmp.getString(3);
+                    String prenom = rsEmp.getString(4);
+                    String tel = rsEmp.getString(5);
+                    String mail = rsEmp.getString(6);
+                    emp = new Employe(id_employe, mat, nomp, prenom, tel, mail);
+                }
+                Projet p = new Projet(idProjet, nom, dated, datef, cout, emp);
                 lp.add(p);
             }
             return lp;

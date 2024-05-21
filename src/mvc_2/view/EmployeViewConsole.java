@@ -15,6 +15,7 @@ public class EmployeViewConsole extends AbstractView<Employe> {
     @Override
     public void menu() {
         update(controller.getAll());
+        System.out.println();
         List options = Arrays.asList("Ajouter", "Retirer", "Rechercher", "Modifier", "Fin");
         do {
             int ch = choixListe(options);
@@ -55,7 +56,6 @@ public class EmployeViewConsole extends AbstractView<Employe> {
     }
 
     private void retirer() {
-
         int nl = choixElt(la) - 1;
         Employe e = la.get(nl);
         boolean ok = controller.remove(e);
@@ -64,9 +64,10 @@ public class EmployeViewConsole extends AbstractView<Employe> {
     }
 
     private void rechercher() {
-        System.out.println("Identifiant de l'employé : ");
+        System.out.print("Identifiant de l'employé : ");
         int idEmploye = sc.nextInt();
-        controller.search(idEmploye);
+        Employe emp = controller.search(idEmploye);
+        System.out.println(emp);
     }
 
     private void modifier() {
