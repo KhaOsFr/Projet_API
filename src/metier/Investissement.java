@@ -27,6 +27,8 @@ public class Investissement {
      */
     protected Discipline discipline;
 
+    protected Projet projet;
+
     /**
      *
      * @param quantiteJH quantité (journée / homme)
@@ -36,6 +38,13 @@ public class Investissement {
         id_invest = id++;
         this.quantiteJH = quantiteJH;
         this.discipline = discipline;
+    }
+
+    public Investissement(int id_invest, int quantiteJH, Discipline discipline, Projet projet) {
+        this.id_invest = id_invest;
+        this.quantiteJH = quantiteJH;
+        this.discipline = discipline;
+        this.projet = projet;
     }
 
     /**
@@ -91,5 +100,15 @@ public class Investissement {
      */
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
+    }
+
+    @Override
+    public String toString() {
+        return "Investissement{" +
+                "id_invest=" + id_invest +
+                ", quantiteJH=" + quantiteJH +
+                ", discipline=" + discipline +
+                ", projet=" + projet +
+                '}';
     }
 }

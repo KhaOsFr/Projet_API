@@ -290,7 +290,7 @@ public class Employe {
 
     @Override
     public String toString() {
-        return " Employé " +
+        return "Employé " +
                 "n°" + id_emplye +
                 " | Matricule : " + matricule +
                 " | Nom : " + nom +

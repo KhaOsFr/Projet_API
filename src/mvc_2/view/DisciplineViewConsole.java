@@ -1,7 +1,6 @@
 package mvc_2.view;
 
 import metier.Discipline;
-import metier.Employe;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,25 +40,25 @@ public class DisciplineViewConsole extends AbstractView<Discipline> {
     }
 
     private void ajouter() {
-        System.out.print("Nom de la discipline : ");
+        System.out.print("\nNom de la discipline : ");
         String nom = sc.nextLine();
         System.out.print("Description : ");
         String desc = sc.nextLine();
         Discipline disc = controller.add(new Discipline(0, nom, desc));
-        if (disc != null) affMsg("création de :" + disc);
-        else affMsg("Erreur de création");
+        if (disc != null) affMsg("\nCréation de :" + disc);
+        else affMsg("\nErreur de création");
     }
 
     private void retirer() {
         int nl = choixElt(la) - 1;
         Discipline d = la.get(nl);
         boolean ok = controller.remove(d);
-        if (ok) affMsg("Discipline effacée");
-        else affMsg("Discipline non effacée");
+        if (ok) affMsg("\nDiscipline effacée");
+        else affMsg("\nDiscipline non effacée");
     }
 
     private void rechercher() {
-        System.out.print("Identifiant de la discipline : ");
+        System.out.print("\nIdentifiant de la discipline : ");
         int idDisc = sc.nextInt();
         Discipline disc = controller.search(idDisc);
         System.out.println(disc);
@@ -71,8 +70,8 @@ public class DisciplineViewConsole extends AbstractView<Discipline> {
         String nom = modifyIfNotBlank("Nom : ", disc.getNom());
         String desc = modifyIfNotBlank("Description : ", disc.getDescription());
         Discipline discmaj = controller.update(new Discipline(disc.getId_discipline(), nom, desc));
-        if (discmaj == null) affMsg("mise à jour infrucueuse");
-        else affMsg("mise à jour effectuée : " + discmaj);
+        if (discmaj == null) affMsg("\nMise à jour infrucueuse");
+        else affMsg("\nMise à jour effectuée : " + discmaj);
     }
 
     private void affMsg(String msg) {

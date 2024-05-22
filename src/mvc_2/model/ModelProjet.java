@@ -73,10 +73,10 @@ public class ModelProjet extends DAO<Projet> implements DAOSpecialProjet {
         String query = "update APIPROJET set nom=?,datedebut=?,datefin=?,cout=? where id_projet=?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1, elt.getNom());
-            pstm.setDate(2,elt.getDateDebut()!=null?Date.valueOf(elt.getDateDebut()):null);
-            pstm.setDate(3,elt.getDateFin()!=null?Date.valueOf(elt.getDateFin()):null);
+            pstm.setDate(2, elt.getDateDebut() != null ? Date.valueOf(elt.getDateDebut()) : null);
+            pstm.setDate(3, elt.getDateFin() != null ? Date.valueOf(elt.getDateFin()) : null);
             pstm.setBigDecimal(4, elt.getCout());
-            pstm.setInt(5,elt.getId_projet());
+            pstm.setInt(5, elt.getId_projet());
             int n = pstm.executeUpdate();
             notifyObservers();
             if (n != 0) return read(elt.getId_projet());
@@ -89,16 +89,31 @@ public class ModelProjet extends DAO<Projet> implements DAOSpecialProjet {
 
     @Override
     public Projet read(int rech) {
-        String query = "select * from APIPROJET where id_projet = ?";
-        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setInt(1, rech);
-            ResultSet rs = pstm.executeQuery();
+        String query1 = "select * from APIPROJET where id_projet = ?";
+        String query2 = "select * from APIEMPLOYE where id_empl = ?";
+        try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
+             PreparedStatement pstm2 = dbConnect.prepareStatement(query2);) {
+            pstm1.setInt(1, rech);
+            ResultSet rs = pstm1.executeQuery();
             if (rs.next()) {
                 String nom = rs.getString(2);
                 LocalDate dated = rs.getDate(3).toLocalDate();
                 LocalDate datef = rs.getDate(4).toLocalDate();
                 BigDecimal cout = rs.getBigDecimal(5);
-                return new Projet(rech, nom, dated, datef, cout);
+                int id_emp = rs.getInt(6);
+
+                pstm2.setInt(1, id_emp);
+                ResultSet rs2 = pstm2.executeQuery();
+                Employe emp = null;
+                if (rs2.next()) {
+                    String mat = rs2.getString(2);
+                    String nomp = rs2.getString(3);
+                    String prenom = rs2.getString(4);
+                    String tel = rs2.getString(5);
+                    String mail = rs2.getString(6);
+                    emp = new Employe(id_emp, mat, nomp, prenom, tel, mail);
+                }
+                return new Projet(rech, nom, dated, datef, cout, emp);
             } else {
                 return null;
             }
@@ -148,32 +163,124 @@ public class ModelProjet extends DAO<Projet> implements DAOSpecialProjet {
     }
 
     @Override
-    public List<Investissement> listeDisciplinesEtInvestissement(Projet p) {
-        return List.of();
-    }
-
-    @Override
     public boolean addDiscipline(Discipline d, int qte, Projet p) {
-        return true;
+        String query = "insert into  APIINVESTISSEMENT(quantitejh,id_disc,id_proj) values(?,?,?)";
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1, qte);
+            pstm.setInt(2, d.getId_discipline());
+            pstm.setInt(3, p.getId_projet());
+            int n = pstm.executeUpdate();
+            if (n != 0) return true;
+            else return false;
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+            return false;
+        }
     }
 
     @Override
     public boolean modifDiscipline(Discipline d, int qte, Projet p) {
-        return true;
+        String query = "update  APIINVESTISSEMENT set quantitejh = ? where id_disc = ? and id_proj = ?";
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1, qte);
+            pstm.setInt(2, d.getId_discipline());
+            pstm.setInt(3, p.getId_projet());
+            int n = pstm.executeUpdate();
+            if (n != 0) return true;
+            else return false;
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+            return false;
+        }
     }
 
     @Override
     public boolean suppDiscipline(Discipline d, Projet p) {
-        return true;
+        String query = "delete from APIINVESTISSEMENT where  id_disc = ? and id_proj = ?";
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1, d.getId_discipline());
+            pstm.setInt(2, p.getId_projet());
+            int n = pstm.executeUpdate();
+            if (n != 0) return true;
+            else return false;
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+            return false;
+        }
     }
 
     @Override
-    public List<NiveauResponsableDiscipline> niveauxResponsableDisciplines(Projet p) {
-        return List.of();
+    public int investissementTotal(Projet p) {
+        String query = "{ ? = call apiproj_invest_total(?) }"; //Utilisation de la fonction embarquée
+        try (CallableStatement cs = dbConnect.prepareCall(query)) {
+            cs.registerOutParameter(1, Types.INTEGER);
+            cs.setInt(2, p.getId_projet());
+            cs.executeQuery();
+            return cs.getInt(1);
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+            return -1;
+        }
     }
 
     @Override
-    public int investissementTotal() {
-        return 0;
+    public List<Investissement> listeDisciplinesEtInvestissement(Projet p) {
+        String query1 = "select * from APIINVESTISSEMENT where id_proj = ?";
+        String query2 = "select * from APIDISCIPLINE where id_disc = ?";
+        List<Investissement> li = new ArrayList<>();
+        try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
+             PreparedStatement pstm2 = dbConnect.prepareStatement(query2)) {
+            pstm1.setInt(1, p.getId_projet());
+            ResultSet rs1 = pstm1.executeQuery();
+            while (rs1.next()) {
+                int id_invest = rs1.getInt(1);
+                int qte = rs1.getInt(2);
+                int id_disc = rs1.getInt(3);
+                pstm2.setInt(1, id_disc);
+                ResultSet rs2 = pstm2.executeQuery();
+                Discipline disc = null;
+                if (rs2.next()) {
+                    String nom = rs2.getString(2);
+                    String desc = rs2.getString(3);
+                    disc = new Discipline(id_disc, nom, desc);
+                }
+                Investissement inv = new Investissement(id_invest, qte, disc, p);
+                li.add(inv);
+            }
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+        }
+        return li;
+    }
+
+    @Override
+    public List<Competence> niveauxResponsableDisciplines(Projet p) {
+        String query1 = "select c.id_comp, c.niveau, c.id_disc, c.id_empl from APICOMPETENCE c join APIPROJET p on c.id_empl = p.id_empl where p.id_projet = ? and c.id_empl = ?";
+        String query2 = "select * from APIDISCIPLINE where id_disc = ?";
+        List<Competence> lc = new ArrayList<>();
+        try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
+             PreparedStatement pstm2 = dbConnect.prepareStatement(query2)) {
+            pstm1.setInt(1, p.getId_projet());
+            pstm1.setInt(2, p.getResponsable().getId_emplye());
+            ResultSet rs1 = pstm1.executeQuery();
+            while (rs1.next()) {
+                int id_comp = rs1.getInt(1);
+                int niveau = rs1.getInt(2);
+                int id_disc = rs1.getInt(3);
+                pstm2.setInt(1, id_disc);
+                ResultSet rs2 = pstm2.executeQuery();
+                Discipline disc = null;
+                if (rs2.next()) {
+                    String nom = rs2.getString(2);
+                    String desc = rs2.getString(3);
+                    disc = new Discipline(id_disc, nom, desc);
+                }
+                Competence comp = new Competence(id_comp, niveau, disc, p.getResponsable());
+                lc.add(comp);
+            }
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+        }
+        return lc;
     }
 }

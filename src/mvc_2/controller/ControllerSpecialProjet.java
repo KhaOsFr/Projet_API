@@ -14,7 +14,7 @@ public interface ControllerSpecialProjet {
 
     public boolean suppDiscipline(Discipline d, Projet p);
 
-    public List<NiveauResponsableDiscipline> niveauxResponsableDisciplines(Projet p);
+    public List<Competence> niveauxResponsableDisciplines(Projet p);
 
-    public int investissementTotal();
+    public int investissementTotal(Projet p);
 }

@@ -1,9 +1,6 @@
 package mvc_2.controller;
 
-import metier.Discipline;
-import metier.Investissement;
-import metier.NiveauResponsableDiscipline;
-import metier.Projet;
+import metier.*;
 import mvc_2.model.DAO;
 import mvc_2.model.DAOSpecialProjet;
 import mvc_2.view.AbstractView;
@@ -37,12 +34,12 @@ public class ProjetController extends Controller<Projet> implements ControllerSp
     }
 
     @Override
-    public List<NiveauResponsableDiscipline> niveauxResponsableDisciplines(Projet p) {
+    public List<Competence> niveauxResponsableDisciplines(Projet p) {
         return ((DAOSpecialProjet) model).niveauxResponsableDisciplines(p);
     }
 
     @Override
-    public int investissementTotal() {
-        return ((DAOSpecialProjet) model).investissementTotal();
+    public int investissementTotal(Projet p) {
+        return ((DAOSpecialProjet) model).investissementTotal(p);
     }
 }

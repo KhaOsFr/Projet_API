@@ -4,6 +4,7 @@ import metier.*;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -182,8 +183,8 @@ public class ModelEmploye extends DAO<Employe> implements DAOSpecialEmploye {
 
     @Override
     public List<Competence> listeDisciplinesEtNiveau(Employe emp) {
-        String query1 = "SELECT * FROM APICOMPETENCE WHERE id_empl = ?";
-        String query2 = "SELECT * FROM APIDISCIPLINE WHERE id_disc = ?";
+        String query1 = "select * from APICOMPETENCE where id_empl = ?";
+        String query2 = "select * from APIDISCIPLINE where id_disc = ?";
         List<Competence> lc = new ArrayList<>();
         try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
              PreparedStatement pstm2 = dbConnect.prepareStatement(query2)) {
@@ -212,7 +213,23 @@ public class ModelEmploye extends DAO<Employe> implements DAOSpecialEmploye {
 
     @Override
     public List<Projet> listeProjets(Employe emp) {
-        return List.of();
+        String query = "select * from  APIPROJET where  id_empl = ?";
+        List<Projet> lp = new ArrayList<>();
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1, emp.getId_emplye());
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                int id_proj = rs.getInt(1);
+                String nom = rs.getString(2);
+                LocalDate dated = rs.getDate(3).toLocalDate();
+                LocalDate datef = rs.getDate(4).toLocalDate();
+                BigDecimal cout = rs.getBigDecimal(5);
+                Projet p = new Projet(id_proj, nom, dated, datef, cout, emp);
+                lp.add(p);
+            }
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+        }
+        return lp;
     }
-
 }
