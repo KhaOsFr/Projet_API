@@ -1,22 +1,20 @@
 package mvc_2.controller;
 
-import metier.Discipline;
-import metier.Investissement;
-import metier.NiveauResponsableDiscipline;
+import metier.*;
 
 import java.util.List;
 
 public interface ControllerSpecialProjet {
 
-    public List<Investissement> listeDisciplinesEtInvestissement();
+    public List<Investissement> listeDisciplinesEtInvestissement(Projet p);
 
-    public void addDiscipline(Discipline d, int qte);
+    public boolean addDiscipline(Discipline d, int qte, Projet p);
 
-    public void modifDiscipline(Discipline d, int qte);
+    public boolean modifDiscipline(Discipline d, int qte, Projet p);
 
-    public void suppDiscipline(Discipline d);
+    public boolean suppDiscipline(Discipline d, Projet p);
 
-    public List<NiveauResponsableDiscipline> niveauxResponsableDisciplines();
+    public List<NiveauResponsableDiscipline> niveauxResponsableDisciplines(Projet p);
 
     public int investissementTotal();
 }

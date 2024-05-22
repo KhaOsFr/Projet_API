@@ -1,20 +1,18 @@
 package mvc_2.controller;
 
-import metier.Discipline;
-import metier.DisciplinesEtNiveau;
-import metier.Projet;
+import metier.*;
 
 import java.util.List;
 
 public interface ControllerSpecialEmploye {
 
-    public List<DisciplinesEtNiveau> listeDisciplinesEtNiveau();
+    public List<Competence> listeDisciplinesEtNiveau(Employe emp);
 
-    public void addDiscipline(Discipline d, int niveau);
+    public boolean addDiscipline(Discipline d, int niveau, Employe emp);
 
-    public void modifDiscipline(Discipline d, int niveau);
+    public boolean modifDiscipline(Discipline d, int niveau, Employe emp);
 
-    public void suppDiscipline(Discipline d);
+    public boolean suppDiscipline(Discipline d, Employe emp);
 
-    public List<Projet> listeProjets();
+    public List<Projet> listeProjets(Employe emp);
 }

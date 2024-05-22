@@ -1,9 +1,6 @@
 package mvc_2.controller;
 
-import metier.Discipline;
-import metier.DisciplinesEtNiveau;
-import metier.Employe;
-import metier.Projet;
+import metier.*;
 import mvc_2.model.DAO;
 import mvc_2.model.DAOSpecialEmploye;
 import mvc_2.view.AbstractView;
@@ -17,27 +14,27 @@ public class EmployeController extends Controller<Employe> implements Controller
     }
 
     @Override
-    public List<DisciplinesEtNiveau> listeDisciplinesEtNiveau() {
-        return ((DAOSpecialEmploye) model).listeDisciplinesEtNiveau();
+    public List<Competence> listeDisciplinesEtNiveau(Employe emp) {
+        return ((DAOSpecialEmploye) model).listeDisciplinesEtNiveau(emp);
     }
 
     @Override
-    public void addDiscipline(Discipline d, int niveau) {
-        ((DAOSpecialEmploye) model).addDiscipline(d, niveau);
+    public boolean addDiscipline(Discipline d, int niveau, Employe emp) {
+        return ((DAOSpecialEmploye) model).addDiscipline(d, niveau, emp);
     }
 
     @Override
-    public void modifDiscipline(Discipline d, int niveau) {
-        ((DAOSpecialEmploye) model).modifDiscipline(d, niveau);
+    public boolean modifDiscipline(Discipline d, int niveau, Employe emp) {
+        return ((DAOSpecialEmploye) model).modifDiscipline(d, niveau, emp);
     }
 
     @Override
-    public void suppDiscipline(Discipline d) {
-        ((DAOSpecialEmploye) model).suppDiscipline(d);
+    public boolean suppDiscipline(Discipline d, Employe emp) {
+        return ((DAOSpecialEmploye) model).suppDiscipline(d, emp);
     }
 
     @Override
-    public List<Projet> listeProjets() {
-        return ((DAOSpecialEmploye) model).listeProjets();
+    public List<Projet> listeProjets(Employe emp) {
+        return ((DAOSpecialEmploye) model).listeProjets(emp);
     }
 }

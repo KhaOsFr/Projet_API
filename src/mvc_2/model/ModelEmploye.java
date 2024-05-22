@@ -1,14 +1,12 @@
 package mvc_2.model;
 
-import metier.Discipline;
-import metier.DisciplinesEtNiveau;
-import metier.Employe;
+import metier.*;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import metier.Projet;
 import myconnections.DBConnection;
 
 public class ModelEmploye extends DAO<Employe> implements DAOSpecialEmploye {
@@ -65,7 +63,7 @@ public class ModelEmploye extends DAO<Employe> implements DAOSpecialEmploye {
             if (n != 0) return true;
             else return false;
         } catch (SQLException e) {
-            System.err.println("Erreur sql :" + e);
+            System.err.println("erreur sql :" + e);
             return false;
         }
     }
@@ -136,27 +134,85 @@ public class ModelEmploye extends DAO<Employe> implements DAOSpecialEmploye {
     }
 
     @Override
-    public List<DisciplinesEtNiveau> listeDisciplinesEtNiveau() {
+    public boolean addDiscipline(Discipline d, int niveau, Employe emp) {
+        String query = "insert into  APICOMPETENCE(niveau,id_disc,id_empl) values(?,?,?)";
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1, niveau);
+            pstm.setInt(2, d.getId_discipline());
+            pstm.setInt(3, emp.getId_emplye());
+            int n = pstm.executeUpdate();
+            if (n != 0) return true;
+            else return false;
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean modifDiscipline(Discipline d, int niveau, Employe emp) {
+        String query = "update  APICOMPETENCE set niveau = ? where id_disc = ? AND id_empl = ?";
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1, niveau);
+            pstm.setInt(2, d.getId_discipline());
+            pstm.setInt(3, emp.getId_emplye());
+            int n = pstm.executeUpdate();
+            if (n != 0) return true;
+            else return false;
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean suppDiscipline(Discipline d, Employe emp) {
+        String query = "delete from APICOMPETENCE where  id_disc = ? and id_empl = ?";
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1, d.getId_discipline());
+            pstm.setInt(2, emp.getId_emplye());
+            int n = pstm.executeUpdate();
+            if (n != 0) return true;
+            else return false;
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+            return false;
+        }
+    }
+
+    @Override
+    public List<Competence> listeDisciplinesEtNiveau(Employe emp) {
+        String query1 = "SELECT * FROM APICOMPETENCE WHERE id_empl = ?";
+        String query2 = "SELECT * FROM APIDISCIPLINE WHERE id_disc = ?";
+        List<Competence> lc = new ArrayList<>();
+        try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
+             PreparedStatement pstm2 = dbConnect.prepareStatement(query2)) {
+            pstm1.setInt(1, emp.getId_emplye());
+            ResultSet rs1 = pstm1.executeQuery();
+            while (rs1.next()) {
+                int id_comp = rs1.getInt(1);
+                int niveau = rs1.getInt(2);
+                int id_disc = rs1.getInt(3);
+                pstm2.setInt(1, id_disc);
+                ResultSet rs2 = pstm2.executeQuery();
+                Discipline disc = null;
+                if (rs2.next()) {
+                    String nom = rs2.getString(2);
+                    String desc = rs2.getString(3);
+                    disc = new Discipline(id_disc, nom, desc);
+                }
+                Competence comp = new Competence(id_comp, niveau, disc, emp);
+                lc.add(comp);
+            }
+        } catch (SQLException e) {
+            System.err.println("erreur sql :" + e);
+        }
+        return lc;
+    }
+
+    @Override
+    public List<Projet> listeProjets(Employe emp) {
         return List.of();
     }
 
-    @Override
-    public void addDiscipline(Discipline d, int niveau) {
-
-    }
-
-    @Override
-    public void modifDiscipline(Discipline d, int niveau) {
-
-    }
-
-    @Override
-    public void suppDiscipline(Discipline d) {
-
-    }
-
-    @Override
-    public List<Projet> listeProjets() {
-        return List.of();
-    }
 }

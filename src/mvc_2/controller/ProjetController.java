@@ -17,28 +17,28 @@ public class ProjetController extends Controller<Projet> implements ControllerSp
     }
 
     @Override
-    public List<Investissement> listeDisciplinesEtInvestissement() {
-        return ((DAOSpecialProjet) model).listeDisciplinesEtInvestissement();
+    public List<Investissement> listeDisciplinesEtInvestissement(Projet p) {
+        return ((DAOSpecialProjet) model).listeDisciplinesEtInvestissement(p);
     }
 
     @Override
-    public void addDiscipline(Discipline d, int qte) {
-        ((DAOSpecialProjet) model).addDiscipline(d, qte);
+    public boolean addDiscipline(Discipline d, int qte, Projet p) {
+        return ((DAOSpecialProjet) model).addDiscipline(d, qte, p);
     }
 
     @Override
-    public void modifDiscipline(Discipline d, int qte) {
-        ((DAOSpecialProjet) model).modifDiscipline(d, qte);
+    public boolean modifDiscipline(Discipline d, int qte, Projet p) {
+        return ((DAOSpecialProjet) model).modifDiscipline(d, qte, p);
     }
 
     @Override
-    public void suppDiscipline(Discipline d) {
-        ((DAOSpecialProjet) model).suppDiscipline(d);
+    public boolean suppDiscipline(Discipline d, Projet p) {
+        return ((DAOSpecialProjet) model).suppDiscipline(d, p);
     }
 
     @Override
-    public List<NiveauResponsableDiscipline> niveauxResponsableDisciplines() {
-        return ((DAOSpecialProjet) model).niveauxResponsableDisciplines();
+    public List<NiveauResponsableDiscipline> niveauxResponsableDisciplines(Projet p) {
+        return ((DAOSpecialProjet) model).niveauxResponsableDisciplines(p);
     }
 
     @Override

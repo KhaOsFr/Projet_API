@@ -148,27 +148,27 @@ public class ModelProjet extends DAO<Projet> implements DAOSpecialProjet {
     }
 
     @Override
-    public List<Investissement> listeDisciplinesEtInvestissement() {
+    public List<Investissement> listeDisciplinesEtInvestissement(Projet p) {
         return List.of();
     }
 
     @Override
-    public void addDiscipline(Discipline d, int qte) {
-
+    public boolean addDiscipline(Discipline d, int qte, Projet p) {
+        return true;
     }
 
     @Override
-    public void modifDiscipline(Discipline d, int qte) {
-
+    public boolean modifDiscipline(Discipline d, int qte, Projet p) {
+        return true;
     }
 
     @Override
-    public void suppDiscipline(Discipline d) {
-
+    public boolean suppDiscipline(Discipline d, Projet p) {
+        return true;
     }
 
     @Override
-    public List<NiveauResponsableDiscipline> niveauxResponsableDisciplines() {
+    public List<NiveauResponsableDiscipline> niveauxResponsableDisciplines(Projet p) {
         return List.of();
     }
 

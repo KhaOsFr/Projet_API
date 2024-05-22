@@ -27,6 +27,8 @@ public class Competence {
      */
     protected Discipline discipline;
 
+    protected Employe employe;
+
 
     /**
      *
@@ -37,6 +39,13 @@ public class Competence {
         id_comp = id++;
         this.niveau = niveau;
         this.discipline = discipline;
+    }
+
+    public Competence(int id_comp, int niveau, Discipline discipline, Employe employe) {
+        this.id_comp = id_comp;
+        this.niveau = niveau;
+        this.discipline = discipline;
+        this.employe = employe;
     }
 
     /**
@@ -92,5 +101,15 @@ public class Competence {
      */
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
+    }
+
+    @Override
+    public String toString() {
+        return "Competence{" +
+                "id_comp=" + id_comp +
+                ", niveau=" + niveau +
+                ", discipline=" + discipline +
+                ", employe=" + employe +
+                '}';
     }
 }
