@@ -98,10 +98,10 @@ public class ProjetViewConsole extends AbstractView<Projet> {
     private void modifier() {
         int nl = choixElt(la);
         Projet p = la.get(nl - 1);
-        String nom = modifyIfNotBlank("Nom : ", p.getNom());
-        String date = modifyIfNotBlank("Date de début ", p.getDateDebut() + "");
+        String nom = modifyIfNotBlank("Nom", p.getNom());
+        String date = modifyIfNotBlank("Date de début", p.getDateDebut() + "");
         LocalDate dated = !date.equals("null") ? LocalDate.parse(date) : null;
-        date = modifyIfNotBlank("Date de début ", p.getDateFin() + "");
+        date = modifyIfNotBlank("Date de début", p.getDateFin() + "");
         LocalDate datef = !date.equals("null") ? LocalDate.parse(date) : null;
         BigDecimal cout = new BigDecimal(modifyIfNotBlank("montant", p.getCout().toString())).setScale(2, RoundingMode.HALF_UP);
         Projet projmaj = controller.update(new Projet(p.getId_projet(), nom, dated, datef, cout, p.getResponsable()));

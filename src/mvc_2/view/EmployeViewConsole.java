@@ -56,7 +56,7 @@ public class EmployeViewConsole extends AbstractView<Employe> {
         System.out.print("Mail : ");
         String mail = sc.nextLine();
         Employe emp = controller.add(new Employe(0, matricule, nom, prenom, telephone, mail));
-        if (emp != null) affMsg("\ncréation de :" + emp + "");
+        if (emp != null) affMsg("\ncréation de : " + emp + "");
         else affMsg("\nErreur de création");
     }
 
@@ -83,11 +83,11 @@ public class EmployeViewConsole extends AbstractView<Employe> {
         int nl = choixElt(la);
 
         Employe emp = la.get(nl - 1);
-        String matricule = modifyIfNotBlank("\nMatricule de l'employé : ", emp.getMatricule());
-        String nom = modifyIfNotBlank("Nom : ", emp.getNom());
-        String prenom = modifyIfNotBlank("Prénom : ", emp.getPrenom());
-        String tel = modifyIfNotBlank("Téléphone : ", emp.getTel());
-        String mail = modifyIfNotBlank("Mail : ", emp.getMail());
+        String matricule = modifyIfNotBlank("\nMatricule de l'employé", emp.getMatricule());
+        String nom = modifyIfNotBlank("Nom", emp.getNom());
+        String prenom = modifyIfNotBlank("Prénom", emp.getPrenom());
+        String tel = modifyIfNotBlank("Téléphone", emp.getTel());
+        String mail = modifyIfNotBlank("Mail", emp.getMail());
         Employe empmaj = controller.update(new Employe(emp.getId_emplye(), matricule, nom, prenom, tel, mail));
         if (empmaj == null) affMsg("\nMise à jour infrucueuse");
         else affMsg("\nMise à jour effectuée : " + empmaj + "");

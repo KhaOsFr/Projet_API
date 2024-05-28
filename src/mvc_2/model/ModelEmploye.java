@@ -25,7 +25,7 @@ public class ModelEmploye extends DAO<Employe> implements DAOSpecialEmploye {
     @Override
     public Employe add(Employe elt) {
         String query1 = "insert into APIEMPLOYE(matricule,nom,prenom,telephone,mail) values(?,?,?,?,?)";
-        String query2 = "select id_empl from APIPRODUIT where matricule= ?";
+        String query2 = "select id_empl from APIEMPLOYE where matricule= ?";
         try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
              PreparedStatement pstm2 = dbConnect.prepareStatement(query2);
         ) {

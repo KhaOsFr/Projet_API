@@ -67,8 +67,8 @@ public class DisciplineViewConsole extends AbstractView<Discipline> {
     private void modifier() {
         int nl = choixElt(la);
         Discipline disc = la.get(nl - 1);
-        String nom = modifyIfNotBlank("Nom : ", disc.getNom());
-        String desc = modifyIfNotBlank("Description : ", disc.getDescription());
+        String nom = modifyIfNotBlank("Nom", disc.getNom());
+        String desc = modifyIfNotBlank("Description", disc.getDescription());
         Discipline discmaj = controller.update(new Discipline(disc.getId_discipline(), nom, desc));
         if (discmaj == null) affMsg("\nMise à jour infrucueuse");
         else affMsg("\nMise à jour effectuée : " + discmaj);
